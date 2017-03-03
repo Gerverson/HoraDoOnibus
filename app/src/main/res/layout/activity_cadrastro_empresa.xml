@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="450px"
+        android:layout_height="250px"
+        app:srcCompat="@drawable/icone_tela_cadrastro"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/foto_empresa"
+        android:background="@color/colorPrimary" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Nome da Empresa"
+        android:ems="10"
+        android:layout_below="@+id/foto_empresa"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/campo_nome_empresa"
+        android:layout_alignRight="@+id/foto_empresa"
+        android:layout_alignEnd="@+id/foto_empresa" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:layout_above="@+id/campo_nome_empresa"
+        android:layout_alignRight="@+id/foto_empresa"
+        android:layout_alignEnd="@+id/foto_empresa"
+        android:id="@+id/btn_cadrastro_foto_empresa" />
+
+    <TextView
+        android:text="Logo da Empresa\n(Opcional)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/txt_logo_empresa"
+        android:layout_toLeftOf="@+id/btn_cadrastro_foto_empresa"
+        android:layout_toStartOf="@+id/btn_cadrastro_foto_empresa"
+        android:textSize="24sp"
+        android:layout_above="@+id/btn_cadrastro_foto_empresa"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/background_dark"/>
+
+    <Button
+        android:text="Cadrastrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/campo_nome_empresa"
+        android:layout_alignRight="@+id/campo_nome_empresa"
+        android:layout_alignEnd="@+id/campo_nome_empresa"
+        android:id="@+id/btn_cadrastrar_empresa" />
+
+    <Button
+        android:text="Cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btn_cadrastrar_empresa"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btn_cancelar_cadrastro_empresa" />
+</RelativeLayout>

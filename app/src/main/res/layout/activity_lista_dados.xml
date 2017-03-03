@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.gerverson.apps.horadoonibus.Activity.ListaDados">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarDados"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_adicianar_dados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_plus"
+        app:backgroundTint="@color/colorPrimary" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:layout_marginTop="55dp"
+        app:srcCompat="@drawable/icone_tela_cadrastro"
+        android:id="@+id/foto_dados"
+        android:background="@color/colorPrimary" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:id="@+id/listview_dados"/>
+
+    <TextView
+        android:text="Não há rotas de viagens cadrastradas\nClique em + para adicionar cadrastrar uma empresa de transpote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSemDados"
+        android:layout_marginTop="300px"
+        android:layout_centerHorizontal="true"
+        tools:textAlignment="center"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark" />
+
+
+
+</android.support.design.widget.CoordinatorLayout>

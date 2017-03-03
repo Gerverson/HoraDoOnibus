@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_marginTop="0px"
+        android:ems="10"
+        android:id="@+id/campo_cadrastrar_origem"
+        android:hint="Origem"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/campo_cadrastrar_destino"
+        android:hint="Destino"
+        android:layout_below="@+id/campo_cadrastrar_origem"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="Horário:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_horario"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/campo_cadrastrar_valor" />
+
+    <Spinner
+        android:layout_width="100px"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_hora"
+        android:layout_marginLeft="130px"
+        android:layout_below="@+id/campo_cadrastrar_valor" />
+
+    <Spinner
+        android:layout_width="100px"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_minuto"
+        android:layout_marginLeft="260px"
+        android:layout_below="@+id/campo_cadrastrar_valor" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/campo_cadrastrar_valor"
+        android:hint="Valor"
+        android:layout_below="@+id/campo_cadrastrar_destino"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_cancelar_cadrastar_dados"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/spinner_hora"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Cadrastrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_cadrastrar_dados"
+        android:layout_alignBaseline="@+id/btn_cancelar_cadrastar_dados"
+        android:layout_alignBottom="@+id/btn_cancelar_cadrastar_dados"
+        android:layout_alignRight="@+id/campo_cadrastrar_valor"
+        android:layout_alignEnd="@+id/campo_cadrastrar_valor" />
+
+
+</RelativeLayout>
