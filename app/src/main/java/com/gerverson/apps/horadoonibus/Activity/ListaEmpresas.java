@@ -28,6 +28,7 @@ public class ListaEmpresas extends AppCompatActivity {
     ArrayList<String> ListaEmpresas;
     ArrayAdapter<String> adaptador;
     ListView EmpresasList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,6 @@ public class ListaEmpresas extends AppCompatActivity {
 
         TxtSemEmpresa = (TextView) findViewById(R.id.txtSemEmpresa);
         EmpresasList = (ListView) findViewById(R.id.listview_empresa);
-      //  ListaEmpresas = new List<String>();
-
         ListarEmpresas(false);
 
 
@@ -47,7 +46,7 @@ public class ListaEmpresas extends AppCompatActivity {
         consulta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ListaEmpresas.this,Consulta.class));
+                startActivity(new Intent(ListaEmpresas.this, Consulta.class));
             }
         });
 
@@ -65,9 +64,6 @@ public class ListaEmpresas extends AppCompatActivity {
                 String NEmpresa = (String) EmpresasList.getItemAtPosition(position);
                 Intent intentVaiPtoFormulario = new Intent(ListaEmpresas.this, ListaDados.class);
                 intentVaiPtoFormulario.putExtra("NEmpresa", NEmpresa);
-              //  AlertDialog.Builder al = new AlertDialog.Builder(com.gerverson.apps.horadoonibus.Activity.ListaEmpresas.this);
-              //  al.setMessage(">"+NEmpresa+"<");
-              //  al.show();
                 startActivity(intentVaiPtoFormulario);
 
             }
@@ -76,7 +72,7 @@ public class ListaEmpresas extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         ListarEmpresas(false);
     }
@@ -93,7 +89,7 @@ public class ListaEmpresas extends AppCompatActivity {
 
         if (id == R.id.action_sobre) {
             AlertDialog.Builder builder = new AlertDialog.Builder(com.gerverson.apps.horadoonibus.Activity.ListaEmpresas.this);
-            builder.setMessage("Aplicativo alunos IFTO");
+            builder.setMessage("Aplicativo desenvolvidos por alunos do IFTO - Campus Paraíso");
             builder.show();
             return true;
         }
@@ -108,22 +104,20 @@ public class ListaEmpresas extends AppCompatActivity {
     }
 
 
-    public void ListarEmpresas(Boolean apagar){
+    public void ListarEmpresas(Boolean apagar) {
         final Banco BF = new Banco(this);
         ListaEmpresas = BF.BuscarEmpresas();
 
-
-          if (ListaEmpresas.size() > 0 || apagar){
+        if (ListaEmpresas.size() > 0 || apagar) {
             adaptador = new ArrayAdapter<String>(ListaEmpresas.this, android.R.layout.simple_list_item_1, ListaEmpresas);
             EmpresasList.setAdapter(adaptador);
             registerForContextMenu(EmpresasList);
-              TxtSemEmpresa.setText("");
-              if(apagar){
-                  TxtSemEmpresa.setText("Não há dados cadrastrados\nClique em + para adicionar");
-              }
-          } else{
+            TxtSemEmpresa.setText("");
+            if (apagar) {
+                TxtSemEmpresa.setText("Não há dados cadrastrados\nClique em + para adicionar");
+            }
+        } else {
             TxtSemEmpresa.setText("Não há dados cadrastrados\nClique em + para adicionar");
-          }
-
+        }
     }
 }

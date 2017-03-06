@@ -22,7 +22,7 @@ public class AdapterDados extends BaseAdapter {
     private ArrayList<Dados> dado;
     private boolean tipo;
 
-    public AdapterDados(Context contx, ArrayList<Dados> dados,boolean tipo){
+    public AdapterDados(Context contx, ArrayList<Dados> dados, boolean tipo) {
         this.dado = dados;
         this.context = contx;
         this.tipo = tipo;
@@ -48,7 +48,7 @@ public class AdapterDados extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.list_dados, null);
-        if(view != null){
+        if (view != null) {
             TextView origem_destino = (TextView) view.findViewById(R.id.v_txt_origrm_destino);
             TextView valor = (TextView) view.findViewById(R.id.v_txt_valor);
             TextView hora = (TextView) view.findViewById(R.id.v_txt_hora);
@@ -56,9 +56,9 @@ public class AdapterDados extends BaseAdapter {
 
             Dados DADOS = dado.get(i);
             origem_destino.setText(DADOS.getOrigem() + " -> " + DADOS.getDestino());
-            valor.setText(DADOS.getValor() != null ? "R$ "+String.format("%.2f", DADOS.getValor()) : null);
+            valor.setText(DADOS.getValor() != null ? "R$ " + String.format("%.2f", DADOS.getValor()) : null);
             hora.setText(DADOS.getHorario());
-            empresa.setText(tipo ? DADOS.getEmpresa(): null);
+            empresa.setText(tipo ? DADOS.getEmpresa() : null);
         }
         return view;
     }

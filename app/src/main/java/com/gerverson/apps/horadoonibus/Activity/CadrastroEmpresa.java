@@ -60,8 +60,6 @@ public class CadrastroEmpresa extends AppCompatActivity {
             }
         });
 
-
-
         Atualizar = false;
         AtualizarEmpresa();
         Button Cancelar = (Button) findViewById(R.id.btn_cancelar_cadrastro_empresa);
@@ -85,8 +83,6 @@ public class CadrastroEmpresa extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
@@ -105,32 +101,15 @@ public class CadrastroEmpresa extends AppCompatActivity {
     }
 
     public void AtualizarEmpresa(){
-      //  Intent intent = getIntent();
-      String NEmpresa; // = (String) intent.getSerializableExtra("NEmpresa");
-
-    //    String serial =  intent.getStringExtra("schedule");
-    //    if(serial!=null)
-         //   String s = (String) intent.getSerializableExtra(serial);
-          //  String NEmpresa = (String) intent.getSerializableExtra("NEmpresa");
+      String NEmpresa;
         Intent intent = getIntent();
         try {NEmpresa = (String) intent.getSerializableExtra("NEmpresa");
         } catch (Exception e) {NEmpresa = null;}
-
-        //  AlertDialog.Builder builder=new AlertDialog.Builder(this);
-         // builder.setMessage(">"+NEmpresa+"<");
-        //  builder.show();
-
 
         if(!(NEmpresa == null)){
             NomeEmpresa.setText(NEmpresa);
             Banco BD = new Banco(this);
             String caminho = BD.BuscarFotoEmpresa(NomeEmpresa.getText().toString());
-
-            //   AlertDialog.Builder al = new AlertDialog.Builder(ListaDados.this);
-            //   al.setMessage(">"+caminho+"<");
-            //   al.show();
-
-          //  ImageView campoFoto = (ImageView) findViewById(R.id.foto_empresa);
 
             Atualizar = true;
             if(caminho != null){

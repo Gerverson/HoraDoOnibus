@@ -17,10 +17,6 @@ import com.gerverson.apps.horadoonibus.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 04557105114 on 03/03/2017.
- */
-
 public class Consulta extends AppCompatActivity {
 
     @Override
@@ -60,7 +56,7 @@ public class Consulta extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                         Object item = parent.getItemAtPosition(pos);
                         ORIGEM[0] = item.toString();
-                        if(!(ORIGEM[0].equals("Selecione a Origem..."))){
+                        if (!(ORIGEM[0].equals("Selecione a Origem..."))) {
                             List<String> ListDados = new ArrayList<>();
                             ListDados = BD.SpinnerBuscaDestino(ORIGEM[0]);
                             ListDados.add(0, "Selecione o Destino...");
@@ -69,6 +65,7 @@ public class Consulta extends AppCompatActivity {
                             destino.setAdapter(adaptador);
                         }
                     }
+
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
@@ -78,10 +75,10 @@ public class Consulta extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                         Object item = parent.getItemAtPosition(pos);
                         DESTINO[0] = item.toString();
-                        if(!(DESTINO[0].equals("Selecione o Destino..."))){
+                        if (!(DESTINO[0].equals("Selecione o Destino..."))) {
                             List<String> ListDados = new ArrayList<>();
 
-                            ListDados = BD.SpinnerBuscaEmpresa(ORIGEM[0],DESTINO[0]);
+                            ListDados = BD.SpinnerBuscaEmpresa(ORIGEM[0], DESTINO[0]);
                             ListDados.add(0, "Selecione a Empresa...");
 
                             ArrayAdapter<String> adaptador;
@@ -91,15 +88,14 @@ public class Consulta extends AppCompatActivity {
                             empresa.setAdapter(adaptador);
 
                             ArrayList<Dados> ListaDados = new ArrayList<Dados>();
-                           ListaDados = BD.BuscarFiltrado(ORIGEM[0],DESTINO[0]);
+                            ListaDados = BD.BuscarFiltrado(ORIGEM[0], DESTINO[0]);
 
-                            AdapterDados adapterDados = new AdapterDados(Consulta.this, ListaDados,true);
-                          //  adaptador = new ArrayAdapter<String>(Consulta.this, android.R.layout.simple_list_item_1, ListDados);
-
+                            AdapterDados adapterDados = new AdapterDados(Consulta.this, ListaDados, true);
 
                             ListConsulta.setAdapter(adapterDados);
                         }
                     }
+
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
@@ -109,21 +105,20 @@ public class Consulta extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                         Object item = parent.getItemAtPosition(pos);
                         String EMPRESA = item.toString();
-                        if(!(EMPRESA.equals("Selecione a Empresa..."))){
+                        if (!(EMPRESA.equals("Selecione a Empresa..."))) {
 
                             ArrayList<Dados> ListaDados = new ArrayList<Dados>();
 
-                            ListaDados = BD.BuscarFiltradoEmpresa(ORIGEM[0],DESTINO[0],EMPRESA);
+                            ListaDados = BD.BuscarFiltradoEmpresa(ORIGEM[0], DESTINO[0], EMPRESA);
 
                             AdapterDados adapterDados = new AdapterDados(Consulta.this, ListaDados, false);
 
                             ListConsulta.setAdapter(adapterDados);
                         }
                     }
+
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
-}
-
-
+    }
 }

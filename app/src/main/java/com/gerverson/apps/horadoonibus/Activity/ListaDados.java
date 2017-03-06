@@ -36,6 +36,8 @@ public class ListaDados extends AppCompatActivity {
     String NomeEmpresa;
     TextView TxtSemDados;
     Toolbar toolbar;
+    Banco BD;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,10 @@ public class ListaDados extends AppCompatActivity {
 
         ListViewDados = (ListView) findViewById(R.id.listview_dados);
 
-
-
         TxtSemDados = (TextView) findViewById(R.id.txtSemDados);
         CarregarDados();
 
-        Intent intent = getIntent();
+        intent = getIntent();
         NomeEmpresa = (String) intent.getSerializableExtra("NEmpresa");
 
         toolbar = (Toolbar) findViewById(R.id.toolbarDados);
@@ -57,10 +57,11 @@ public class ListaDados extends AppCompatActivity {
         toolbar.setTitle("  "+NomeEmpresa);
         setSupportActionBar(toolbar);
 
-        final Banco BD = new Banco(this);
+        BD = new Banco(this);
         String caminho = BD.BuscarFotoEmpresa(NomeEmpresa);
 
         ImageView campoFoto = (ImageView) findViewById(R.id.foto_dados);
+
 
         if(caminho != null){
             Bitmap bitmap = BitmapFactory.decodeFile(caminho);
@@ -79,6 +80,7 @@ public class ListaDados extends AppCompatActivity {
                 startActivity(intentVaiPtoFormulario);
             }
         });
+
         ListViewDados.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
@@ -91,6 +93,12 @@ public class ListaDados extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
+                            case R.id.action_editar:
+                                Intent intentVaiPtoFormulario = new Intent(ListaDados.this, CadrastroDados.class);
+                                intentVaiPtoFormulario.putExtra("IDDados", dados.getId());
+                                intentVaiPtoFormulario.putExtra("NEmpresa", NomeEmpresa);
+                                startActivity(intentVaiPtoFormulario);
+                                return true;
                             case R.id.action_remover:
                                 BD.DeletarDado(dados.getId());
                                 CarregarDados();
@@ -127,16 +135,21 @@ public class ListaDados extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent = getIntent();
+        final Banco BD = new Banco(ListaDados.this);
         NomeEmpresa = (String) intent.getSerializableExtra("NEmpresa");
+        if (id == R.id.action_editar){
+            Intent intentVaiPtoFormulario = new Intent(ListaDados.this, CadrastroEmpresa.class);
+            intentVaiPtoFormulario.putExtra("NEmpresa", NomeEmpresa);
+            startActivityForResult(intentVaiPtoFormulario,002);
+        }
         if (id == R.id.action_remover) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setIcon(R.drawable.ic_delete);
             builder.setTitle("Remover Empresa");
             builder.setMessage("Aviso: Ao deletar a empresa todos os dados serão apagados.");
             builder.setPositiveButton("Deleta", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Banco BD = new Banco(ListaDados.this);
+
                     BD.DeletarEmpresa(NomeEmpresa);
                     finish();
                 }
@@ -162,7 +175,7 @@ public class ListaDados extends AppCompatActivity {
         }else {
             AdapterDados adapterDados = new AdapterDados(this, ArrayListDados, false);
             ListViewDados.setAdapter(adapterDados);
-            TxtSemDados.setText("Cadrastre Dados");
+            TxtSemDados.setText("Não há dados de rota de viagem cadrastrados\nClique em + para cadrastrar.");
         }
     }
 }

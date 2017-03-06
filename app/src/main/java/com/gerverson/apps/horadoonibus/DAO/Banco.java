@@ -18,10 +18,10 @@ import java.util.List;
 
 public class Banco extends SQLiteOpenHelper {
     private static final String NOME_BD = "Registros";
-    private static final int VERSAO_BD = 2;
+    private static final int VERSAO_BD = 1;
 
 
-    public Banco(Context ctx){
+    public Banco(Context ctx) {
         super(ctx, NOME_BD, null, VERSAO_BD);
     }
 
@@ -49,7 +49,7 @@ public class Banco extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<String> BuscarEmpresas(){
+    public ArrayList<String> BuscarEmpresas() {
         db = getWritableDatabase();
         String sql = "SELECT * FROM empresa ORDER BY nome;";
         Cursor c = db.rawQuery(sql, null);
@@ -75,9 +75,9 @@ public class Banco extends SQLiteOpenHelper {
         }
     }
 
-    public String BuscarFotoEmpresa(String Empresa){
+    public String BuscarFotoEmpresa(String Empresa) {
         db = getWritableDatabase();
-        String sql = "SELECT foto FROM empresa WHERE nome = '"+Empresa+"';";
+        String sql = "SELECT foto FROM empresa WHERE nome = '" + Empresa + "';";
         Cursor c = db.rawQuery(sql, null);
         String caminho = null;
         while (c.moveToNext()) {
@@ -104,76 +104,67 @@ public class Banco extends SQLiteOpenHelper {
     }
 
 
-
-    public ArrayList<Dados> BuscarDados(String Empresa){
+    public ArrayList<Dados> BuscarDados(String Empresa) {
         db = getWritableDatabase();
         ArrayList<Dados> dados = new ArrayList<>();
-        try{
-      //  String sql = "SELECT * FROM dados;";
-            String sql = "SELECT * FROM dados WHERE empresa = '"+Empresa+"'";
-
-        Cursor c = db.rawQuery(sql, null);
-
-
-        while (c.moveToNext()) {
-            Dados d = new Dados();
-            d.setEmpresa(c.getString(c.getColumnIndex("empresa")));
-            d.setOrigem(c.getString(c.getColumnIndex("origem")));
-            d.setDestino(c.getString(c.getColumnIndex("destino")));
-            d.setHorario(c.getString(c.getColumnIndex("horas")));
-            d.setValor(c.getDouble(c.getColumnIndex("valor")));
-            d.setId(c.getInt(c.getColumnIndex("id")));
-            dados.add(d);
-        }
-        c.close();
-    } catch (SQLiteAbortException e) {
-    } catch (SQLException e) {
-    } catch (Exception e) {
-    }
-        return dados;
-    }
-
-    public ArrayList<Dados> BuscarDadosoi(){
-        db = getWritableDatabase();
-        ArrayList<Dados> dados = new ArrayList<>(); int con = 0;
-        try{
-            String sql = "SELECT * FROM dados;";
+        try {
+            String sql = "SELECT * FROM dados WHERE empresa = '" + Empresa + "'";
             Cursor c = db.rawQuery(sql, null);
 
             while (c.moveToNext()) {
                 Dados d = new Dados();
-                d.setOrigem("oi"+con);   con++;
-                d.setDestino("xh"+con);
+                d.setEmpresa(c.getString(c.getColumnIndex("empresa")));
+                d.setOrigem(c.getString(c.getColumnIndex("origem")));
+                d.setDestino(c.getString(c.getColumnIndex("destino")));
+                d.setHorario(c.getString(c.getColumnIndex("horas")));
+                d.setValor(c.getDouble(c.getColumnIndex("valor")));
+                d.setId(c.getInt(c.getColumnIndex("id")));
                 dados.add(d);
             }
             c.close();
         } catch (SQLiteAbortException e) {
-            Dados d = new Dados();
-            d.setDestino("1"+e);
-            dados.add(d);
         } catch (SQLException e) {
-            Dados d = new Dados();
-            d.setDestino("2"+e);
-            dados.add(d);
         } catch (Exception e) {
-            Dados d = new Dados();
-            d.setDestino("3"+e);
-            dados.add(d);
         }
         return dados;
     }
 
-    public void LimparTudo(){
+    public Dados BuscarAtualizarDados(Integer ID) {
+        db = getWritableDatabase();
+        Dados d = new Dados();
+        try {
+            String sql = "SELECT * FROM dados WHERE id = " + ID + "";
+
+            Cursor c = db.rawQuery(sql, null);
+
+            while (c.moveToNext()) {
+
+                d.setEmpresa(c.getString(c.getColumnIndex("empresa")));
+                d.setOrigem(c.getString(c.getColumnIndex("origem")));
+                d.setDestino(c.getString(c.getColumnIndex("destino")));
+                d.setHorario(c.getString(c.getColumnIndex("horas")));
+                d.setValor(c.getDouble(c.getColumnIndex("valor")));
+                d.setId(c.getInt(c.getColumnIndex("id")));
+            }
+            c.close();
+        } catch (SQLiteAbortException e) {
+        } catch (SQLException e) {
+        } catch (Exception e) {
+        }
+        return d;
+    }
+
+    public void LimparTudo() {
         db = getWritableDatabase();
         db.execSQL("delete from empresa");
         db.execSQL("delete from dados");
     }
 
-    public void AtualizarEmpresa(Empresa empresa, String nome){
+    public void AtualizarEmpresa(Empresa empresa, String nome) {
         db = getWritableDatabase();
         ContentValues valores = new ContentValues();
-            valores.put("nome", empresa.getEmpresa());
-            valores.put("foto", empresa.getLogo());
+        valores.put("nome", empresa.getEmpresa());
+        valores.put("foto", empresa.getLogo());
         String[] params = {nome};
         db.update("empresa", valores, "nome = ?", params);
         valores = new ContentValues();
@@ -181,18 +172,29 @@ public class Banco extends SQLiteOpenHelper {
         db.update("dados", valores, "empresa = ?", params);
     }
 
-    public void DeletarEmpresa(String empresa){
+    public void AtualizarDados(Dados dados, int id) {
         db = getWritableDatabase();
-        db.delete("empresa", "nome = '" +empresa+"'", null);
-        db.delete("dados", "empresa = '" +empresa+"'", null);
+        ContentValues valores = new ContentValues();
+        valores.put("origem", dados.getOrigem());
+        valores.put("destino", dados.getDestino());
+        valores.put("horas", dados.getHorario());
+        valores.put("valor", dados.getValor());
+        String[] params = {String.valueOf(id)};
+        db.update("dados", valores, "id = ?", params);
     }
 
-    public void DeletarDado(int id){
+    public void DeletarEmpresa(String empresa) {
         db = getWritableDatabase();
-        db.delete("dados", "id = " +id+"", null);
+        db.delete("empresa", "nome = '" + empresa + "'", null);
+        db.delete("dados", "empresa = '" + empresa + "'", null);
     }
 
-    public List<String> SpinnerBuscaOrigem(){
+    public void DeletarDado(int id) {
+        db = getWritableDatabase();
+        db.delete("dados", "id = " + id + "", null);
+    }
+
+    public List<String> SpinnerBuscaOrigem() {
         db = getWritableDatabase();
         String sql = "SELECT DISTINCT origem FROM dados;";
         Cursor c = db.rawQuery(sql, null);
@@ -203,9 +205,10 @@ public class Banco extends SQLiteOpenHelper {
         c.close();
         return origens;
     }
-    public List<String> SpinnerBuscaDestino(String Origem){
+
+    public List<String> SpinnerBuscaDestino(String Origem) {
         db = getWritableDatabase();
-        String sql = "SELECT DISTINCT destino FROM dados where origem = '"+Origem+"';";
+        String sql = "SELECT DISTINCT destino FROM dados where origem = '" + Origem + "';";
         Cursor c = db.rawQuery(sql, null);
         List<String> origens = new ArrayList<>();
         while (c.moveToNext()) {
@@ -215,9 +218,9 @@ public class Banco extends SQLiteOpenHelper {
         return origens;
     }
 
-    public List<String> SpinnerBuscaEmpresa(String Origem, String Destino){
+    public List<String> SpinnerBuscaEmpresa(String Origem, String Destino) {
         db = getWritableDatabase();
-        String sql = "SELECT DISTINCT empresa FROM dados where origem = '"+Origem+"' and destino ='"+Destino+"';";
+        String sql = "SELECT DISTINCT empresa FROM dados where origem = '" + Origem + "' and destino ='" + Destino + "';";
         Cursor c = db.rawQuery(sql, null);
         List<String> origens = new ArrayList<>();
         while (c.moveToNext()) {
@@ -226,9 +229,10 @@ public class Banco extends SQLiteOpenHelper {
         c.close();
         return origens;
     }
-    public ArrayList<Dados> BuscarFiltrado(String Origem, String Destino){
+
+    public ArrayList<Dados> BuscarFiltrado(String Origem, String Destino) {
         db = getWritableDatabase();
-        String sql = "SELECT * FROM dados where origem = '"+Origem+"' and destino ='"+Destino+"';";
+        String sql = "SELECT * FROM dados where origem = '" + Origem + "' and destino ='" + Destino + "';";
         Cursor c = db.rawQuery(sql, null);
 
         ArrayList<Dados> dados = new ArrayList<>();
@@ -246,9 +250,9 @@ public class Banco extends SQLiteOpenHelper {
         return dados;
     }
 
-    public ArrayList<Dados> BuscarFiltradoEmpresa(String Origem, String Destino, String Empresa){
+    public ArrayList<Dados> BuscarFiltradoEmpresa(String Origem, String Destino, String Empresa) {
         db = getWritableDatabase();
-        String sql = "SELECT * FROM dados where origem = '"+Origem+"' and destino ='"+Destino+"' and empresa = '"+Empresa+"';";
+        String sql = "SELECT * FROM dados where origem = '" + Origem + "' and destino ='" + Destino + "' and empresa = '" + Empresa + "';";
         Cursor c = db.rawQuery(sql, null);
 
         ArrayList<Dados> dados = new ArrayList<>();
